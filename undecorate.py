@@ -27,7 +27,6 @@ TypeError: wrapper() got an unexpected keyword argument 'c'
 >>>
 >>> unwrap(myfunc)('a', 'b', c='c')
 ('a', 'b', 'c', None)
->>>
 """
 
 from functools import wraps
