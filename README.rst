@@ -27,4 +27,3 @@ Usage
     >>>
     >>> unwrap(myfunc)('a', b='b')
     ('a', 'b', None)
-    >>>
