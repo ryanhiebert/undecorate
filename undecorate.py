@@ -58,3 +58,4 @@ def unwrap(wrapped):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+    doctest.testfile('README.rst')
