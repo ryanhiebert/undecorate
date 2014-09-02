@@ -13,7 +13,7 @@ setup(
     author='Ryan Hiebert',
     author_email='ryan@ryanhiebert.com',
     url='https://github.com/ryanhiebert/undecorate',
-    license='MIT License',
+    license='MIT',
     py_modules=['undecorate'],
     classifiers=[
         'Development Status :: 3 - Alpha',
