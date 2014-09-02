@@ -3,6 +3,13 @@ undecorate
 
 Let your decorations be undone
 
+Installation
+------------
+
+.. code:: sh
+
+    pip install undecorate
+
 Usage
 -----
 
