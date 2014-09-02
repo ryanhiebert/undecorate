@@ -1,10 +1,15 @@
+from os.path import dirname, join
 from setuptools import setup
+
+
+def fread(fn):
+    return open(join(dirname(__file__), fn)).read()
 
 setup(
     name='undecorate',
     version='0.1',
     description='Let your decorations be undone',
-    long_description=open('README.rst').read(),
+    long_description=fread('README.rst'),
     author='Ryan Hiebert',
     author_email='ryan@ryanhiebert.com',
     url='https://github.com/ryanhiebert/undecorate',
