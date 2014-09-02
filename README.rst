@@ -6,14 +6,14 @@ Let your decorations be undone
 Installation
 ------------
 
-.. code:: sh
+.. code-block:: sh
 
-    pip install undecorate
+    $ pip install undecorate
 
 Usage
 -----
 
-.. code:: python
+.. code-block:: pycon
 
     >>> from undecorate import unwrap, unwrappable
     >>>
