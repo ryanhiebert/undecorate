@@ -22,7 +22,7 @@ Example:
 ...
 >>> myfunc('a', 'b', c='c')
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
+    ...
 TypeError: wrapper() got an unexpected keyword argument 'c'
 >>>
 >>> unwrap(myfunc)('a', 'b', c='c')
@@ -57,5 +57,5 @@ def unwrap(wrapped):
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod()
-    doctest.testfile('README.rst')
+    doctest.testmod(optionflags=doctest.IGNORE_EXCEPTION_DETAIL)
+    doctest.testfile('README.rst', optionflags=doctest.IGNORE_EXCEPTION_DETAIL)

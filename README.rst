@@ -29,7 +29,7 @@ Usage
     ...
     >>> myfunc('a', b='b')
     Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
+        ...
     TypeError: wrapper() got an unexpected keyword argument 'b'
     >>>
     >>> unwrap(myfunc)('a', b='b')
