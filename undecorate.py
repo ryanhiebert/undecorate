@@ -36,23 +36,28 @@ def unwrappable(decorator):
     """Make a decorator able to be un-decorated.
 
     This meta-decorator takes a decorator, and returns a new decorator
-    that allows the decoration to be used by unwrap().
+    that allows the wrapper to be used by unwrap().
+
+    This is unneeded in Python 3.3+, where the __wrapped__ attribute
+    is updated properly, if the wrapper is updated using functools.wraps or
+    functools.update_wrapper. The __wrapped__ attribute that gets added in
+    Python 3.2 always points to the innermost wrapped function.
     """
     @wraps(decorator)
-    def wrapper(decoration):
-        decorated = decorator(decoration)
-        decorated.__decoration__ = decoration
-        return decorated
-    return wrapper
+    def meta_wrapper(wrapped):
+        wrapper = decorator(wrapped)
+        wrapper.__wrapped__ = wrapped
+        return wrapper
+    return meta_wrapper
 
 
-def unwrap(wrapped):
-    """Remove all wrappers from this decorated object."""
+def unwrap(wrapper):
+    """Remove the wrapper, recursively all the way down."""
     while True:
-        decoration = getattr(wrapped, '__decoration__', None)
-        if decoration is None:
-            return wrapped
-        wrapped = decoration
+        wrapped = getattr(wrapper, '__wrapped__', None)
+        if wrapped is None:
+            return wrapper
+        wrapper = wrapped
 
 
 CLASS_WRAPPER_DELETES = ('__dict__', '__doc__', '__weakref__')
