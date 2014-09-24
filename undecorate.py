@@ -29,7 +29,38 @@ TypeError: wrapper() got an unexpected keyword argument 'c'
 ('a', 'b', 'c', None)
 """
 
-from functools import wraps, partial
+import functools
+
+
+WRAPPER_ASSIGNMENTS = functools.WRAPPER_ASSIGNMENTS
+WRAPPER_UPDATES = functools.WRAPPER_UPDATES
+
+
+def update_wrapper(wrapper,
+                   wrapped,
+                   assigned=WRAPPER_ASSIGNMENTS,
+                   updated=WRAPPER_UPDATES):
+    """Backport setting __wrapped__ from functools.update_wrapper().
+
+    Python 3.2 introduced, and Python 3.3 fixed, a new feature to
+    functools.update_wrapper() that adds a __wrapped__ attribute to the
+    wrapper function.
+
+    This is a backport of that fixed functionality, built on top of
+    functools.update_wrapper().
+    """
+    wrapper = functools.update_wrapper(
+        wrapper, wrapped, assigned=assigned, updated=updated)
+    wrapper.__wrapped__ = wrapped
+    return wrapper
+
+
+def wraps(wrapped,
+          assigned=WRAPPER_ASSIGNMENTS,
+          updated=WRAPPER_UPDATES):
+    """Decorator factory to apply backported update_wrapper()."""
+    return functools.partial(update_wrapper, wrapped=wrapped,
+                             assigned=assigned, updated=updated)
 
 
 def unwrappable(decorator):
@@ -107,8 +138,8 @@ def class_wraps(wrapped,
     This is a convenience function to simplify applying partial() to
     create_class_wrapper().
     """
-    return partial(create_class_wrapper, wrapped=wrapped,
-                   deleted=deleted, assigned=assigned)
+    return functools.partial(create_class_wrapper, wrapped=wrapped,
+                             deleted=deleted, assigned=assigned)
 
 
 if __name__ == '__main__':
