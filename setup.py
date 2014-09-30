@@ -9,7 +9,7 @@ setup(
     name='undecorate',
     version='0.2',
     description='Let your decorations be undone',
-    long_description=fread('README.rst'),
+    long_description=fread('README.rst') + '\n\n' + fread('HISTORY.rst'),
     author='Ryan Hiebert',
     author_email='ryan@ryanhiebert.com',
     url='https://github.com/ryanhiebert/undecorate',
