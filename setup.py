@@ -7,7 +7,7 @@ def fread(fn):
 
 setup(
     name='undecorate',
-    version='0.1',
+    version='0.2',
     description='Let your decorations be undone',
     long_description=fread('README.rst'),
     author='Ryan Hiebert',
