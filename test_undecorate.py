@@ -136,3 +136,29 @@ class TestWraps(TestUpdateWrapper):
         self.assertEqual(wrapper.__doc__, None)
         self.assertEqual(wrapper.attr, 'This is a different test')
         self.assertEqual(wrapper.dict_attr, f.dict_attr)
+
+
+class TestClassWraps(unittest.TestCase):
+    def test_class_wraps(self):
+        class Wrapped(object):
+            """Wrapped docstring"""
+            def f(self):
+                """Test f"""
+                return 'test f'
+
+        @undecorate.class_wraps(Wrapped)
+        class Wrapper(Wrapped):
+            """Wrapper docstring"""
+            @undecorate.wraps(Wrapped.f)
+            def f(self):
+                """Test f Wrapper"""
+                return Wrapped.f(self)
+            def g(self):
+                """Test g Wrapper"""
+
+        self.assertTrue(Wrapper.__wrapped__ is Wrapped)
+        self.assertEqual(Wrapper.__name__, 'Wrapped')
+        self.assertEqual(Wrapper.__doc__, 'Wrapped docstring')
+        self.assertEqual(Wrapper.f.__doc__, 'Test f')
+        self.assertEqual(Wrapper.g.__doc__, 'Test g Wrapper')
+        self.assertEqual(Wrapper().f(), 'test f')

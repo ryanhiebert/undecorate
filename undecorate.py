@@ -91,13 +91,11 @@ def unwrap(wrapper):
         wrapper = wrapped
 
 
-CLASS_WRAPPER_DELETES = ('__dict__', '__doc__', '__weakref__')
-CLASS_WRAPPER_ASSIGNMENTS = ('__module__',)
+CLASS_WRAPPER_ASSIGNMENTS = ('__module__', '__doc__')
 
 
 def create_class_wrapper(wrapper,
                          wrapped,
-                         deleted=CLASS_WRAPPER_DELETES,
                          assigned=CLASS_WRAPPER_ASSIGNMENTS):
     """Create a wrapper class that looks like the wrapped class.
 
@@ -115,9 +113,6 @@ def create_class_wrapper(wrapper,
     """
     __dict__ = dict(wrapper.__dict__)
 
-    for attr in deleted:
-        __dict__.pop(attr)
-
     for attr in assigned:
         __dict__[attr] = getattr(wrapped, attr)
 
@@ -127,9 +122,7 @@ def create_class_wrapper(wrapper,
     return wrapped.__class__(wrapped.__name__, (wrapped,), __dict__)
 
 
-def class_wraps(wrapped,
-                deleted=CLASS_WRAPPER_DELETES,
-                assigned=CLASS_WRAPPER_ASSIGNMENTS):
+def class_wraps(wrapped, assigned=CLASS_WRAPPER_ASSIGNMENTS):
     """Decorator factory to apply create_class_wrapper() to a wrapper class.
 
     Return a decorator that invokes create_class_wrapper() with the decorated
@@ -139,7 +132,7 @@ def class_wraps(wrapped,
     create_class_wrapper().
     """
     return functools.partial(create_class_wrapper, wrapped=wrapped,
-                             deleted=deleted, assigned=assigned)
+                             assigned=assigned)
 
 
 if __name__ == '__main__':
