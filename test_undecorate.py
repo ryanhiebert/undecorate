@@ -145,6 +145,8 @@ class TestClassWraps(unittest.TestCase):
             def f(self):
                 """Test f"""
                 return 'test f'
+            def g(self):
+                """Test g"""
 
         @undecorate.class_wraps(Wrapped)
         class Wrapper(Wrapped):
